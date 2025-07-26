@@ -13,7 +13,7 @@ resource "aws_vpc" "airflow-deployment-vpc" {
 resource "aws_subnet" "airflow-deployment-public-subnet" {
   vpc_id     = aws_vpc.airflow-deployment-vpc.id
   cidr_block = "10.1.1.0/24"
-  availability_zone = "eu-central-1a"
+  availability_zone = "eu-west-1a"
 
   tags = {
     project = "airflow-deployment"
@@ -24,7 +24,7 @@ resource "aws_subnet" "airflow-deployment-public-subnet" {
 resource "aws_subnet" "airflow-deployment-private-subnet-a" {
   vpc_id     = aws_vpc.airflow-deployment-vpc.id
   cidr_block = "10.1.2.0/24"
-  availability_zone = "eu-central-1a"
+  availability_zone = "eu-west-1a"
 
     tags = {
         project = "airflow-deployment"
@@ -35,7 +35,7 @@ resource "aws_subnet" "airflow-deployment-private-subnet-a" {
 resource "aws_subnet" "airflow-deployment-private-subnet-b" {
   vpc_id     = aws_vpc.airflow-deployment-vpc.id
   cidr_block = "10.1.3.0/24"
-  availability_zone = "eu-central-1b"
+  availability_zone = "eu-west-1b"
 
     tags = {
         project = "airflow-deployment"
@@ -46,7 +46,7 @@ resource "aws_subnet" "airflow-deployment-private-subnet-b" {
 resource "aws_subnet" "airflow-deployment-private-subnet-c" {
   vpc_id     = aws_vpc.airflow-deployment-vpc.id
   cidr_block = "10.1.4.0/24"
-  availability_zone = "eu-central-1c"
+  availability_zone = "eu-west-1c"
 
     tags = {
         project = "airflow-deployment"
@@ -57,7 +57,7 @@ resource "aws_subnet" "airflow-deployment-private-subnet-c" {
 resource "aws_subnet" "airflow-deployment-private-subnet-d" {
   vpc_id     = aws_vpc.airflow-deployment-vpc.id
   cidr_block = "10.1.5.0/24"
-  availability_zone = "eu-central-1a"
+  availability_zone = "eu-west-1a"
 
     tags = {
         project = "airflow-deployment"
@@ -68,7 +68,7 @@ resource "aws_subnet" "airflow-deployment-private-subnet-d" {
 resource "aws_subnet" "airflow-deployment-private-subnet-e" {
   vpc_id     = aws_vpc.airflow-deployment-vpc.id
   cidr_block = "10.1.6.0/24"
-  availability_zone = "eu-central-1b"
+  availability_zone = "eu-west-1b"
 
     tags = {
         project = "airflow-deployment"
@@ -79,7 +79,7 @@ resource "aws_subnet" "airflow-deployment-private-subnet-e" {
 resource "aws_subnet" "airflow-deployment-private-subnet-f" {
   vpc_id     = aws_vpc.airflow-deployment-vpc.id
   cidr_block = "10.1.7.0/24"
-  availability_zone = "eu-central-1c"
+  availability_zone = "eu-west-1c"
 
     tags = {
         project = "airflow-deployment"
@@ -177,37 +177,3 @@ resource "aws_route_table_association" "airflow-deployment-private-subnet-associ
     subnet_id      = aws_subnet.airflow-deployment-private-subnet-f.id
     route_table_id = aws_route_table.airflow-deployment-private-route-table.id
 }
-
-# ## security group for the RDS instance
-# resource "aws_security_group" "airflow-deployment-rds-sg" {
-#   vpc_id = aws_vpc.airflow-deployment-vpc.id
-
-#   ingress {
-#     from_port   = 3306
-#     to_port     = 3306
-#     protocol    = "tcp"
-#     cidr_blocks = ["10.1.0.0/16"]
-#   }
-
-#     egress {
-#         from_port   = 0
-#         to_port     = 0
-#         protocol    = "-1"
-#         cidr_blocks = ["0.0.0.0/0"]
-#     }
-
-#     tags = {
-#         project = "airflow-deployment"
-#     }
-
-# }
-
-
-# data "aws_instance" "airflow-deployment-instance" {
-#   instance_id = "i-0fb6b4cf6cde0a1a8"
-
-#   filter {
-#     name   = "project"
-#     values = ["airflow-deployment"]
-#   }
-# }
