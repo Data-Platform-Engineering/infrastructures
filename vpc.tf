@@ -5,6 +5,9 @@ resource "aws_vpc" "airflow-deployment-vpc" {
 
   tags = {
     project = "airflow-deployment"
+    environment = "production"
+    team = "Data platform engineering team"
+    service "VPC"
   }
 }
 
@@ -17,6 +20,9 @@ resource "aws_subnet" "airflow-deployment-public-subnet" {
 
   tags = {
     project = "airflow-deployment"
+    environment = "production"
+    team = "Data platform engineering team"
+    service "public subnet"
   }
 }
 
@@ -29,6 +35,9 @@ resource "aws_subnet" "airflow-deployment-private-subnet-a" {
     tags = {
         project = "airflow-deployment"
         vpc_resource = "RDS"
+        environment = "production"
+        team = "Data platform engineering team"
+        service "private subnet1 for RDS"
     }
 }
 
@@ -40,6 +49,9 @@ resource "aws_subnet" "airflow-deployment-private-subnet-b" {
     tags = {
         project = "airflow-deployment"
         vpc_resource = "RDS"
+        environment = "production"
+        team = "Data platform engineering team"
+        service "private subnet2 for RDS"
     }
 }
 
@@ -51,6 +63,9 @@ resource "aws_subnet" "airflow-deployment-private-subnet-c" {
     tags = {
         project = "airflow-deployment"
         vpc_resource = "RDS"
+        environment = "production"
+        team = "Data platform engineering team"
+        service "private subnet3 for RDS"
     }
 }
 
@@ -62,6 +77,9 @@ resource "aws_subnet" "airflow-deployment-private-subnet-d" {
     tags = {
         project = "airflow-deployment"
         vpc_resource = "REDSHIFT"
+        environment = "production"
+        team = "Data platform engineering team"
+        service "private subnet1 for REDSHIFT"
     }
 }
 
@@ -73,6 +91,10 @@ resource "aws_subnet" "airflow-deployment-private-subnet-e" {
     tags = {
         project = "airflow-deployment"
         vpc_resource = "REDSHIFT"
+        environment = "production"
+        team = "Data platform engineering team"
+        service "private subnet2 for REDSHIFT"
+        
     }
 }
 
@@ -84,6 +106,9 @@ resource "aws_subnet" "airflow-deployment-private-subnet-f" {
     tags = {
         project = "airflow-deployment"
         vpc_resource = "REDSHIFT"
+        environment = "production"
+        team = "Data platform engineering team"
+        service "private subnet3 for REDSHIFT"
     }
 }
 
@@ -92,6 +117,9 @@ resource "aws_internet_gateway" "airflow-deployment-igw" {
 
   tags = {
     project = "airflow-deployment"
+    environment = "production"
+    team = "Data platform engineering team"
+    service "internet gateway"
   }
 }
 
@@ -106,6 +134,9 @@ resource "aws_route_table" "airflow-deployment-public-route-table" {
 
   tags = {
     project = "airflow-deployment"
+    environment = "production"
+    team = "Data platform engineering team"
+    service "route table"
   }
 }
 
@@ -122,6 +153,9 @@ resource "aws_eip" "airflow-deployment-eip" {
 
   tags = {
     project = "airflow-deployment"
+    environment = "production"
+    team = "Data platform engineering team"
+    service "route table"
   }
 }
 
@@ -132,6 +166,9 @@ resource "aws_nat_gateway" "airflow-deployment-nat-gateway" {
 
   tags = {
     project = "airflow-deployment"
+    environment = "production"
+    team = "Data platform engineering team"
+    service "nat gateway"
   }
 }
 
@@ -145,6 +182,9 @@ resource "aws_route_table" "airflow-deployment-private-route-table" {
     }
     tags = {
       project = "airflow-deployment"
+      environment = "production"
+    team = "Data platform engineering team"
+    service "private route table"
     }
 }
 

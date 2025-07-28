@@ -15,6 +15,9 @@ resource "aws_redshift_cluster" "airflow-deployment-redshift-cluster" {
 
   tags = {
     project = "airflow-deployment"
+    environment = "production"
+    team = "Data platform engineering team"
+    service = "REDSHIFT"
   }
 }
 
@@ -27,6 +30,9 @@ resource "aws_redshift_subnet_group" "airflow-deployment-redshift-subnet-group" 
 
   tags = {
     project = "airflow-deployment"
+    environment = "production"
+    team = "Data platform engineering team"
+    service = "REDSHIFT"
   }
 }
 
@@ -39,6 +45,9 @@ resource "aws_ssm_parameter" "airflow-deployment-redshift-username" {
 
   tags = {
     project = "airflow-deployment"
+    environment = "production"
+    team = "Data platform engineering team"
+    service = "REDSHIFT
   }
 }
 
@@ -50,6 +59,9 @@ resource "aws_ssm_parameter" "airflow-deployment-redshift-password" {
 
   tags = {
     project = "airflow-deployment"
+    environment = "production"
+    team = "Data platform engineering team"
+    service = "REDSHIFT"
   }
 }
 
@@ -72,6 +84,9 @@ resource "aws_security_group" "airflow-deployment-redshift-sg" {
         cidr_blocks = ["0.0.0.0/0"]
     }
     tags = {
-      project = "airflow-deployment"
+    project = "airflow-deployment"
+    environment = "production"
+    team = "Data platform engineering team"
+    service = "REDSHIFT"
     }
 }

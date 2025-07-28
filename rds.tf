@@ -3,7 +3,7 @@ resource "aws_db_instance" "airflow-deployment-db-instance" {
   storage_type         = "gp2"
   storage_encrypted    = false
   publicly_accessible  = true
-  db_name              = "helm_deployment_db"
+  db_name              = "airflow_helm_deployment_db"
   identifier           = "airflow-deployment-db-instance"
   multi_az             = false
   engine               = "postgres"
@@ -22,6 +22,9 @@ resource "aws_db_instance" "airflow-deployment-db-instance" {
 
   tags = {
     project = "airflow-deployment"
+    environment = "production"
+    team = "Data platform engineering team"
+    service = "RDS"
   }
 }
 
@@ -35,6 +38,9 @@ resource "aws_db_subnet_group" "airflow-deployment-db-subnet-group" {
 
   tags = {
     project = "airflow-deployment"
+    environment = "production"
+    team = "Data platform engineering team"
+    service = "RDS subnet group"
   }
 }
 
@@ -60,27 +66,36 @@ resource "aws_security_group" "airflow-deployment-rds-sg" {
 
   tags = {
     project = "airflow-deployment"
+    environment = "production"
+    team = "Data platform engineering team"
+    service = "RDS security group"
   }
   }
 
 resource "aws_ssm_parameter" "airflow-deployment-db-username" {
-  name        = "/airflow-deployment/database/username/master"
+  name        = "environment/dpe/airflow/rds/username"
   description = "master username for the RDS database"
   type        = "String"
   value       = var.database_master_username
 
   tags = {
     project = "airflow-deployment"
+    environment = "production"
+    team = "Data platform engineering team"
+    service = "RDS ssm parameter"
   }
 }
 
 resource "aws_ssm_parameter" "airflow-deployment-db-password" {
-  name        = "/airflow-deployment/database/password/master"
+  name        = "environment/dpe/airflow/rds/password"
   description = "master password for the RDS database"
   type        = "String"
   value       = var.database_master_password
 
   tags = {
     project = "airflow-deployment"
+    environment = "production"
+    team = "Data platform engineering team"
+    service = "RDS ssm parameter password"
   }
 }
