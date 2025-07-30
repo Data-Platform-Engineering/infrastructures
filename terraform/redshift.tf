@@ -1,21 +1,22 @@
 module "airflow_redshift" {
   source = "./modules/redshift"
 
-  sg_name            = "airflow-deployment-redshift-sg"
-  vpc_id             = aws_vpc.airflow-deployment-vpc.id
-  subnet_group_name  = "airflow-deployment-redshift-subnet-group"
-  subnet_ids         = [
-    aws_subnet.airflow-deployment-private-subnet-d.id,
-    aws_subnet.airflow-deployment-private-subnet-e.id,
-    aws_subnet.airflow-deployment-private-subnet-f.id
+  sg_name           = "airflow-deployment-redshift-sg"
+  vpc_id            = aws_vpc.airflow-deployment-vpc.id
+  subnet_group_name = "airflow-deployment-redshift-subnet-group"
+  subnet_ids = [
+    aws_subnet.private_subnets["redshift-d"].id,
+    aws_subnet.private_subnets["redshift-e"].id,
+    aws_subnet.private_subnets["redshift-f"].id
+
   ]
 
-  cluster_identifier = "airflow-deployment-redshift-cluster"
-  database_name      = "airflowdb"
-  node_type          = "ra3.large"
-  cluster_type       = "single-node"
-  multi_az           = false
-  port               = 5439
+  cluster_identifier  = "airflow-deployment-redshift-cluster"
+  database_name       = "airflowdb"
+  node_type           = "ra3.large"
+  cluster_type        = "single-node"
+  multi_az            = false
+  port                = 5439
   publicly_accessible = true
   skip_final_snapshot = true
 

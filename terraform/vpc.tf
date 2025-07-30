@@ -13,89 +13,36 @@ resource "aws_vpc" "airflow-deployment-vpc" {
 
   tags = merge(local.common_tags, {
     service = "VPC"
+    Name    = "${var.project_name}-vpc"
   })
 }
 
 
 # public subnet for the VPC
 resource "aws_subnet" "airflow-deployment-public-subnet" {
-  vpc_id            = aws_vpc.airflow-deployment-vpc.id
-  cidr_block        = "10.1.1.0/24"
-  availability_zone = "eu-west-1a"
+  vpc_id                  = aws_vpc.airflow-deployment-vpc.id
+  cidr_block              = "10.1.1.0/24"
+  availability_zone       = "eu-west-1a"
+  map_public_ip_on_launch = true
 
   tags = merge(local.common_tags, {
     service = "Public Subnet"
+    Name    = "${var.project_name}-public-subnet"
   })
 }
 
 #private subnet for the VPC
-resource "aws_subnet" "airflow-deployment-private-subnet-a" {
+resource "aws_subnet" "private_subnets" {
+  for_each = var.private_subnets
+
   vpc_id            = aws_vpc.airflow-deployment-vpc.id
-  cidr_block        = "10.1.2.0/24"
-  availability_zone = "eu-west-1a"
+  cidr_block        = each.value.cidr_block
+  availability_zone = each.value.availability_zone
 
   tags = merge(local.common_tags, {
-    service      = "private subnet1 for RDS"
-    vpc_resource = "RDS"
-  })
-}
-
-resource "aws_subnet" "airflow-deployment-private-subnet-b" {
-  vpc_id            = aws_vpc.airflow-deployment-vpc.id
-  cidr_block        = "10.1.3.0/24"
-  availability_zone = "eu-west-1b"
-
-  tags = merge(local.common_tags, {
-    service      = "private subnet2 for RDS"
-    vpc_resource = "RDS"
-  })
-
-}
-
-resource "aws_subnet" "airflow-deployment-private-subnet-c" {
-  vpc_id            = aws_vpc.airflow-deployment-vpc.id
-  cidr_block        = "10.1.4.0/24"
-  availability_zone = "eu-west-1c"
-
-  tags = merge(local.common_tags, {
-    service      = "private subnet3 for RDS"
-    vpc_resource = "RDS"
-  })
-}
-
-resource "aws_subnet" "airflow-deployment-private-subnet-d" {
-  vpc_id            = aws_vpc.airflow-deployment-vpc.id
-  cidr_block        = "10.1.5.0/24"
-  availability_zone = "eu-west-1a"
-
-  tags = merge(local.common_tags, {
-    service      = "private subnet1 for REDSHIFT"
-    vpc_resource = "REDSHIFT"
-  })
-
-
-}
-
-resource "aws_subnet" "airflow-deployment-private-subnet-e" {
-  vpc_id            = aws_vpc.airflow-deployment-vpc.id
-  cidr_block        = "10.1.6.0/24"
-  availability_zone = "eu-west-1b"
-
-  tags = merge(local.common_tags, {
-    service      = "private subnet2 for REDSHIFT"
-    vpc_resource = "REDSHIFT"
-  })
-
-}
-
-resource "aws_subnet" "airflow-deployment-private-subnet-f" {
-  vpc_id            = aws_vpc.airflow-deployment-vpc.id
-  cidr_block        = "10.1.7.0/24"
-  availability_zone = "eu-west-1c"
-
-  tags = merge(local.common_tags, {
-    service      = "private subnet3 for REDSHIFT"
-    vpc_resource = "REDSHIFT"
+    service      = each.value.service
+    vpc_resource = each.value.vpc_resource
+    Name         = "${var.project_name}-${each.key}"
   })
 
 }
@@ -105,6 +52,7 @@ resource "aws_internet_gateway" "airflow-deployment-igw" {
 
   tags = merge(local.common_tags, {
     service = "Internet Gateway"
+    Name    = "${var.project_name}-igw"
   })
 
 }
@@ -120,6 +68,7 @@ resource "aws_route_table" "airflow-deployment-public-route-table" {
 
   tags = merge(local.common_tags, {
     service = "Public Route Table"
+    Name    = "${var.project_name}-public-route-table"
   })
 
 }
@@ -137,6 +86,7 @@ resource "aws_eip" "airflow-deployment-eip" {
 
   tags = merge(local.common_tags, {
     service = "Elastic IP for NAT Gateway"
+    Name    = "${var.project_name}-nat-gateway-eip"
   })
 
 }
@@ -148,6 +98,7 @@ resource "aws_nat_gateway" "airflow-deployment-nat-gateway" {
 
   tags = merge(local.common_tags, {
     service = "NAT Gateway"
+    Name    = "${var.project_name}-nat-gateway"
   })
 
 
@@ -164,36 +115,14 @@ resource "aws_route_table" "airflow-deployment-private-route-table" {
 
   tags = merge(local.common_tags, {
     service = "Private Route Table"
+    Name    = "${var.project_name}-private-route-table"
   })
 
 }
 
-resource "aws_route_table_association" "airflow-deployment-private-subnet-association-a" {
-  subnet_id      = aws_subnet.airflow-deployment-private-subnet-a.id
-  route_table_id = aws_route_table.airflow-deployment-private-route-table.id
-}
+resource "aws_route_table_association" "private_subnet_associations" {
+  for_each = aws_subnet.private_subnets
 
-resource "aws_route_table_association" "airflow-deployment-private-subnet-association-b" {
-  subnet_id      = aws_subnet.airflow-deployment-private-subnet-b.id
-  route_table_id = aws_route_table.airflow-deployment-private-route-table.id
-}
-
-resource "aws_route_table_association" "airflow-deployment-private-subnet-association-c" {
-  subnet_id      = aws_subnet.airflow-deployment-private-subnet-c.id
-  route_table_id = aws_route_table.airflow-deployment-private-route-table.id
-}
-
-resource "aws_route_table_association" "airflow-deployment-private-subnet-association-d" {
-  subnet_id      = aws_subnet.airflow-deployment-private-subnet-d.id
-  route_table_id = aws_route_table.airflow-deployment-private-route-table.id
-}
-
-resource "aws_route_table_association" "airflow-deployment-private-subnet-association-e" {
-  subnet_id      = aws_subnet.airflow-deployment-private-subnet-e.id
-  route_table_id = aws_route_table.airflow-deployment-private-route-table.id
-}
-
-resource "aws_route_table_association" "airflow-deployment-private-subnet-association-f" {
-  subnet_id      = aws_subnet.airflow-deployment-private-subnet-f.id
+  subnet_id      = each.value.id
   route_table_id = aws_route_table.airflow-deployment-private-route-table.id
 }

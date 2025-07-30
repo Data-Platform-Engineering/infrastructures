@@ -1,13 +1,13 @@
 module "airflow_rds" {
   source = "./modules/rds"
 
-  sg_name             = "airflow-deployment-rds-sg"
-  vpc_id              = aws_vpc.airflow-deployment-vpc.id
-  subnet_group_name   = "airflow-deployment-db-subnet-group"
-  subnet_ids          = [
-    aws_subnet.airflow-deployment-private-subnet-a.id,
-    aws_subnet.airflow-deployment-private-subnet-b.id,
-    aws_subnet.airflow-deployment-private-subnet-c.id
+  sg_name           = "airflow-deployment-rds-sg"
+  vpc_id            = aws_vpc.airflow-deployment-vpc.id
+  subnet_group_name = "airflow-deployment-db-subnet-group"
+  subnet_ids = [
+    aws_subnet.private_subnets["rds-a"].id,
+    aws_subnet.private_subnets["rds-b"].id,
+    aws_subnet.private_subnets["rds-c"].id
   ]
 
   db_name             = "airflow_deployment_db"
