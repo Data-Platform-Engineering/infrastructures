@@ -1,21 +1,7 @@
-variable "database_master_password" {
-  description = "The master password for the RDS database"
-  type        = string
-  sensitive   = true
-
-}
-
 variable "database_master_username" {
   description = "The master username for the RDS database"
   type        = string
   default     = "admin"
-
-}
-
-variable "redshift_master_password" {
-  description = "The master password for the redshift"
-  type        = string
-  sensitive   = true
 
 }
 
@@ -26,6 +12,19 @@ variable "redshift_master_username" {
 
 }
 
+variable "ssm_password_name" {
+  description = "The SSM parameter name for the Redshift master password"
+  type        = string
+  default     = "/airflow-deployment/redshift/password/master"
+
+}
+
+variable "rds_ssm_password_name" {
+  description = "The SSM parameter name for the RDS master password"
+  type        = string
+  default     = "/environment/team/service/rds/password"
+
+}
 variable "project_name" {
   description = "The name of the project"
   type        = string

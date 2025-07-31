@@ -35,29 +35,12 @@ resource "aws_redshift_subnet_group" "redshift_subnet_group" {
   tags = merge(var.common_tags, { service = "Redshift subnet group" })
 }
 
-# SSM Parameters for Redshift credentials
-resource "aws_ssm_parameter" "redshift_username" {
-  name        = var.ssm_username_name
-  description = "Master username for Redshift cluster"
-  type        = "String"
-  value       = var.redshift_master_username
-  tags        = merge(var.common_tags, { service = "Redshift ssm parameter username" })
-}
-
-resource "aws_ssm_parameter" "redshift_password" {
-  name        = var.ssm_password_name
-  description = "Master password for Redshift cluster"
-  type        = "String"
-  value       = var.redshift_master_password
-  tags        = merge(var.common_tags, { service = "Redshift ssm parameter password" })
-}
-
 # Redshift Cluster
 resource "aws_redshift_cluster" "redshift_cluster" {
   cluster_identifier        = var.cluster_identifier
   database_name             = var.database_name
-  master_username           = aws_ssm_parameter.redshift_username.value
-  master_password           = aws_ssm_parameter.redshift_password.value
+  master_username           = var.redshift_master_username
+  master_password           = var.redshift_master_password
   node_type                 = var.node_type
   cluster_type              = var.cluster_type
   cluster_subnet_group_name = aws_redshift_subnet_group.redshift_subnet_group.name

@@ -35,22 +35,6 @@ resource "aws_db_subnet_group" "rds_subnet_group" {
   tags = merge(var.common_tags, { service = "RDS subnet group" })
 }
 
-# SSM Parameters for credentials
-resource "aws_ssm_parameter" "db_username" {
-  name        = var.ssm_username_name
-  description = "Master username for the RDS database"
-  type        = "String"
-  value       = var.database_master_username
-  tags        = merge(var.common_tags, { service = "RDS ssm parameter" })
-}
-
-resource "aws_ssm_parameter" "db_password" {
-  name        = var.ssm_password_name
-  description = "Master password for the RDS database"
-  type        = "String"
-  value       = var.database_master_password
-  tags        = merge(var.common_tags, { service = "RDS ssm parameter password" })
-}
 
 # RDS Instance
 resource "aws_db_instance" "rds_instance" {
@@ -64,16 +48,14 @@ resource "aws_db_instance" "rds_instance" {
   engine                 = var.engine
   engine_version         = var.engine_version
   instance_class         = var.instance_class
-  username               = aws_ssm_parameter.db_username.value
-  password               = aws_ssm_parameter.db_password.value
+  username               = var.database_master_username
+  password               = var.database_master_password
   skip_final_snapshot    = var.skip_final_snapshot
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
   db_subnet_group_name   = aws_db_subnet_group.rds_subnet_group.name
 
   depends_on = [
     aws_db_subnet_group.rds_subnet_group,
-    aws_ssm_parameter.db_username,
-    aws_ssm_parameter.db_password
   ]
 
   tags = merge(var.common_tags, { service = "RDS" })

@@ -1,3 +1,8 @@
+data "aws_ssm_parameter" "redshift_password" {
+  name            = var.ssm_password_name
+  with_decryption = true
+}
+
 module "airflow_redshift" {
   source = "./modules/redshift"
 
@@ -21,10 +26,7 @@ module "airflow_redshift" {
   skip_final_snapshot = true
 
   redshift_master_username = var.redshift_master_username
-  redshift_master_password = var.redshift_master_password
-
-  ssm_username_name = "/airflow-deployment/redshift/username/master"
-  ssm_password_name = "/airflow-deployment/redshift/password/master"
+  redshift_master_password = data.aws_ssm_parameter.redshift_password.value
 
   ingress_rules = [
     {

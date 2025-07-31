@@ -18,9 +18,6 @@ variable "skip_final_snapshot" { type = bool }
 variable "database_master_username" { type = string }
 variable "database_master_password" { type = string }
 
-variable "ssm_username_name" { type = string }
-variable "ssm_password_name" { type = string }
-
 variable "rds_ingress_rules" {
   type = list(object({
     from_port   = number

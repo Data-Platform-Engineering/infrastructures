@@ -14,8 +14,6 @@ variable "skip_final_snapshot" { type = bool }
 
 variable "redshift_master_username" { type = string }
 variable "redshift_master_password" { type = string }
-variable "ssm_username_name" { type = string }
-variable "ssm_password_name" { type = string }
 
 variable "ingress_rules" {
   type = list(object({

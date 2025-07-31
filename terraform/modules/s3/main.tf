@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "airflow-deployment-s3-bucket" {
   bucket = var.bucket_name
-  tags = var.tags
+  tags   = var.tags
 }
 
 resource "aws_s3_bucket_versioning" "versioning" {

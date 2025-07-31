@@ -1,3 +1,8 @@
+data "aws_ssm_parameter" "rds_password" {
+  name            = var.rds_ssm_password_name
+  with_decryption = true
+}
+
 module "airflow_rds" {
   source = "./modules/rds"
 
@@ -23,10 +28,7 @@ module "airflow_rds" {
   skip_final_snapshot = true
 
   database_master_username = var.database_master_username
-  database_master_password = var.database_master_password
-
-  ssm_username_name = "environment/team/service/rds/username"
-  ssm_password_name = "environment/team/service/rds/password"
+  database_master_password = data.aws_ssm_parameter.rds_password.value
 
   rds_ingress_rules = [
     {
