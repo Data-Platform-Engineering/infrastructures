@@ -10,7 +10,7 @@ resource "aws_s3_bucket_versioning" "versioning" {
   }
 }
 
-resource "aws_s3_bucket_server_side_encryption_configuration" "example" {
+resource "aws_s3_bucket_server_side_encryption_configuration" "encryption" {
   count  = var.enable_encryption ? 1 : 0
   bucket = aws_s3_bucket.example.id
   rule {
@@ -19,5 +19,4 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "example" {
     }
     }
   }
-
   
