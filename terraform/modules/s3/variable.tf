@@ -14,3 +14,16 @@ variable "versioning_status" {
   description = "Versioning status for the bucket (Enabled or Suspended)"
   type        = string
 }
+
+
+variable "enable_encryption" {
+  description = "Enable server-side encryption (AES256) for the bucket"
+  type        = bool
+  default     = false
+}
+
+variable "encryption_algorithm" {
+  description = "If server-side encryption is enabled for bucket"
+  type        = string
+  default     = "AES256"
+}
