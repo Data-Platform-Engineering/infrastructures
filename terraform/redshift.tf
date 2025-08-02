@@ -10,9 +10,9 @@ module "airflow_redshift" {
   vpc_id            = aws_vpc.airflow-deployment-vpc.id
   subnet_group_name = "airflow-deployment-redshift-subnet-group"
   subnet_ids = [
-    aws_subnet.private_subnets["redshift-d"].id,
-    aws_subnet.private_subnets["redshift-e"].id,
-    aws_subnet.private_subnets["redshift-f"].id
+    aws_subnet.public_subnets["redshift-d"].id,
+    aws_subnet.public_subnets["redshift-e"].id,
+    aws_subnet.public_subnets["redshift-f"].id
 
   ]
 

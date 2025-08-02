@@ -46,16 +46,30 @@ variable "team" {
 
 }
 
-variable "private_subnets" {
+# variable "private_subnets" {
+#   description = "Map of private subnets for RDS and Redshift"
+#   type        = map(any)
+#   default = {
+#     rds-a      = { cidr_block = "10.1.2.0/24", availability_zone = "eu-west-1a", service = "private subnet1 for RDS", vpc_resource = "RDS" }
+#     rds-b      = { cidr_block = "10.1.3.0/24", availability_zone = "eu-west-1b", service = "private subnet2 for RDS", vpc_resource = "RDS" }
+#     rds-c      = { cidr_block = "10.1.4.0/24", availability_zone = "eu-west-1c", service = "private subnet3 for RDS", vpc_resource = "RDS" }
+#     redshift-d = { cidr_block = "10.1.5.0/24", availability_zone = "eu-west-1a", service = "private subnet1 for REDSHIFT", vpc_resource = "REDSHIFT" }
+#     redshift-e = { cidr_block = "10.1.6.0/24", availability_zone = "eu-west-1b", service = "private subnet2 for REDSHIFT", vpc_resource = "REDSHIFT" }
+#     redshift-f = { cidr_block = "10.1.7.0/24", availability_zone = "eu-west-1c", service = "private subnet3 for REDSHIFT", vpc_resource = "REDSHIFT" }
+#   }
+# }
+
+
+variable "public_subnets" {
   description = "Map of private subnets for RDS and Redshift"
   type        = map(any)
   default = {
-    rds-a      = { cidr_block = "10.1.2.0/24", availability_zone = "eu-west-1a", service = "private subnet1 for RDS", vpc_resource = "RDS" }
-    rds-b      = { cidr_block = "10.1.3.0/24", availability_zone = "eu-west-1b", service = "private subnet2 for RDS", vpc_resource = "RDS" }
-    rds-c      = { cidr_block = "10.1.4.0/24", availability_zone = "eu-west-1c", service = "private subnet3 for RDS", vpc_resource = "RDS" }
-    redshift-d = { cidr_block = "10.1.5.0/24", availability_zone = "eu-west-1a", service = "private subnet1 for REDSHIFT", vpc_resource = "REDSHIFT" }
-    redshift-e = { cidr_block = "10.1.6.0/24", availability_zone = "eu-west-1b", service = "private subnet2 for REDSHIFT", vpc_resource = "REDSHIFT" }
-    redshift-f = { cidr_block = "10.1.7.0/24", availability_zone = "eu-west-1c", service = "private subnet3 for REDSHIFT", vpc_resource = "REDSHIFT" }
+    rds-a      = { cidr_block = "10.1.1.0/24", availability_zone = "eu-west-1a", service = "public subnet1 for RDS", vpc_resource = "RDS" }
+    rds-b      = { cidr_block = "10.1.2.0/24", availability_zone = "eu-west-1b", service = "public subnet2 for RDS", vpc_resource = "RDS" }
+    rds-c      = { cidr_block = "10.1.3.0/24", availability_zone = "eu-west-1c", service = "public subnet3 for RDS", vpc_resource = "RDS" }
+    redshift-d = { cidr_block = "10.1.4.0/24", availability_zone = "eu-west-1a", service = "public subnet1 for REDSHIFT", vpc_resource = "REDSHIFT" }
+    redshift-e = { cidr_block = "10.1.5.0/24", availability_zone = "eu-west-1b", service = "public subnet2 for REDSHIFT", vpc_resource = "REDSHIFT" }
+    redshift-f = { cidr_block = "10.1.6.0/24", availability_zone = "eu-west-1c", service = "public subnet3 for REDSHIFT", vpc_resource = "REDSHIFT" }
   }
 }
 
