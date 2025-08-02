@@ -36,3 +36,15 @@ variable "egress_rules" {
 variable "common_tags" {
   type = map(string)
 }
+
+variable "parameter_group_name" {
+  type = string
+}
+
+variable "parameter_group_family" {
+  type = string
+}
+
+variable "value" {
+  type = bool
+}

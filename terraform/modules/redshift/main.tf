@@ -37,18 +37,34 @@ resource "aws_redshift_subnet_group" "redshift_subnet_group" {
 
 # Redshift Cluster
 resource "aws_redshift_cluster" "redshift_cluster" {
-  cluster_identifier        = var.cluster_identifier
-  database_name             = var.database_name
-  master_username           = var.redshift_master_username
-  master_password           = var.redshift_master_password
-  node_type                 = var.node_type
-  cluster_type              = var.cluster_type
-  cluster_subnet_group_name = aws_redshift_subnet_group.redshift_subnet_group.name
-  multi_az                  = var.multi_az
-  port                      = var.port
-  publicly_accessible       = var.publicly_accessible
-  skip_final_snapshot       = var.skip_final_snapshot
-  vpc_security_group_ids    = [aws_security_group.redshift_sg.id]
+  cluster_identifier           = var.cluster_identifier
+  database_name                = var.database_name
+  master_username              = var.redshift_master_username
+  master_password              = var.redshift_master_password
+  node_type                    = var.node_type
+  cluster_type                 = var.cluster_type
+  cluster_subnet_group_name    = aws_redshift_subnet_group.redshift_subnet_group.name
+  cluster_parameter_group_name = aws_redshift_parameter_group.redshift_parameter_group.name
+  multi_az                     = var.multi_az
+  port                         = var.port
+  publicly_accessible          = var.publicly_accessible
+  skip_final_snapshot          = var.skip_final_snapshot
+  vpc_security_group_ids       = [aws_security_group.redshift_sg.id]
 
   tags = merge(var.common_tags, { service = "Redshift" })
+}
+
+# Redshift Parameter Group
+resource "aws_redshift_parameter_group" "redshift_parameter_group" {
+  name        = var.parameter_group_name
+  family      = var.parameter_group_family
+  description = "Custom Redshift parameter group"
+
+
+  parameter {
+    name  = "require_ssl"
+    value = var.value == "true" ? "true" : "false"
+  }
+
+  tags = merge(var.common_tags, { service = "Redshift parameter group" })
 }

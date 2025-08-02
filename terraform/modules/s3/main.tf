@@ -4,7 +4,7 @@ resource "aws_s3_bucket" "example" {
 }
 
 resource "aws_s3_bucket_versioning" "versioning" {
-  bucket = aws_s3_bucket.example.id  
+  bucket = aws_s3_bucket.example.id
   versioning_configuration {
     status = var.versioning_status == "Enabled" ? "Enabled" : "Suspended"
   }
@@ -17,6 +17,6 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "encryption" {
     apply_server_side_encryption_by_default {
       sse_algorithm = var.encryption_algorithm
     }
-    }
   }
+}
   

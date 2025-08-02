@@ -16,14 +16,17 @@ module "airflow_redshift" {
 
   ]
 
-  cluster_identifier  = "airflow-deployment-redshift-cluster"
-  database_name       = "airflowdb"
-  node_type           = "ra3.large"
-  cluster_type        = "single-node"
-  multi_az            = false
-  port                = 5439
-  publicly_accessible = true
-  skip_final_snapshot = true
+  cluster_identifier     = "airflow-deployment-redshift-cluster"
+  database_name          = "airflowdb"
+  node_type              = "ra3.large"
+  cluster_type           = "single-node"
+  multi_az               = false
+  port                   = 5439
+  publicly_accessible    = true
+  skip_final_snapshot    = true
+  parameter_group_name   = var.parameter_group_name
+  parameter_group_family = var.parameter_group_family
+  value                  = true
 
   redshift_master_username = var.redshift_master_username
   redshift_master_password = data.aws_ssm_parameter.redshift_password.value
